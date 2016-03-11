@@ -17,7 +17,7 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  color: #fff;
+  color: #000;
   font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
   font-size: 14px;
   text-shadow: 0 0 1px transparent;
@@ -51,7 +51,7 @@ h3 {
 }
 a {
   text-decoration: none;
-  color: #bedeea;
+  color: #f11;
 }
 a:hover {
   text-decoration: underline;
@@ -112,10 +112,10 @@ a:hover {
   margin: 50px auto;
 }
 #header a {
-  color: #fff;
+  color: #ce1;
 }
 #header a:hover {
-  color: #bedeea;
+  color: #f11;
   text-decoration: none;
 }
 #header h1 {
@@ -125,7 +125,7 @@ a:hover {
 }
 #header h2 {
   font-weight: normal;
-  font-size: 0.9em;
+  font-size: 0.3em;
   line-height: 1;
   margin-top: 10px;
 }
@@ -143,7 +143,7 @@ a:hover {
 article {
   -webkit-box-shadow: 1px 2px 3px #ddd;
   box-shadow: 1px 2px 3px #ddd;
-  background: rgba(255,255,255,0.2);
+  background: rgba(220,240,255,0.6);
 }
 article.page {
   padding-left: 20px;
@@ -162,7 +162,7 @@ article.link .icon:before {
 }
 article.link .title a:after {
   content: '\f08e';
-  color: #fff;
+  color: #000;
   font: 12px FontAwesome;
   padding-left: 10px;
   vertical-align: super;
@@ -247,7 +247,7 @@ article header .icon {
   position: absolute;
   top: 20px;
   left: 20px;
-  color: #bedeea;
+  color: #f11;
 }
 @media screen and (max-width: 600px) {
   article header .icon {
@@ -263,7 +263,7 @@ article header .icon:before {
   text-align: center;
 }
 article header time {
-  color: #fff;
+  color: #000;
   font: 0.9em "Lato", Helvetica Neue, Helvetica, Arial, sans-serif;
   margin-bottom: 5px;
   display: block;
@@ -273,10 +273,10 @@ article header .title {
   font-weight: normal;
 }
 article header .title a {
-  color: #fff;
+  color: #000;
 }
 article header .title a:hover {
-  color: #bedeea;
+  color: #f11;
   text-decoration: none;
 }
 article .entry {
@@ -298,8 +298,8 @@ article .entry .video-container {
   margin-top: 15px;
 }
 article .entry blockquote {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #cfc;
+  border-bottom: 1px solid #cfc;
   font-style: italic;
   font-family: "Georgia", serif;
   font-size: 1.2em;
@@ -328,13 +328,13 @@ article .entry code {
   padding: 0 5px;
   margin: 0 2px;
   font-size: 0.9em;
-  border: 1px solid #ddd;
+  border: 1px solid #cfc;
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 article .entry pre {
   background: #eee;
-  border: 1px solid #ddd;
+  border: 1px solid #cfc;
   margin-top: 15px;
   overflow: auto;
   padding: 7px 15px;
@@ -368,7 +368,7 @@ article .entry dl dl {
 article .entry h1,
 article .entry h2 {
   font-weight: normal;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #cfc;
   padding-bottom: 10px;
   margin-top: 20px;
 }
@@ -390,7 +390,7 @@ article .entry iframe {
 article .entry .caption {
   display: block;
   margin-top: 5px;
-  color: #fff;
+  color: #000;
   position: relative;
   font-size: 0.9em;
   padding-left: 25px;
@@ -432,18 +432,18 @@ article .entry .pullquote {
 article footer {
   margin-top: 15px;
   padding-top: 10px;
-  border-top: 1px solid #ddd;
-  color: #fff;
+  border-top: 1px solid #cfc;
+  color: #000;
   font-size: 0.9em;
   line-height: 16px;
   position: relative;
   min-height: 16px;
 }
 article footer a {
-  color: #fff;
+  color: #000;
 }
 article footer a:hover {
-  color: #bedeea;
+  color: #f11;
   text-decoration: none;
 }
 article footer a:before {
@@ -498,14 +498,14 @@ article footer .addthis iframe {
 #pagination a {
   display: block;
   padding: 5px 10px;
-  background: #ddd;
-  color: #fff;
+  background: #cfc;
+  color: #000;
   font-family: "Lato", Helvetica Neue, Helvetica, Arial, sans-serif;
   text-shadow: 0 0 1px #fff;
   margin-bottom: 50px;
 }
 #pagination a:hover {
-  background: #bedeea;
+  background: #f11;
   color: #fff;
   text-decoration: none;
   text-shadow: none;
@@ -521,7 +521,7 @@ article footer .addthis iframe {
   font-family: FontAwesome;
 }
 .archive-title {
-  color: #fff;
+  color: #000;
   font-weight: normal;
   margin-bottom: 30px;
   text-shadow: 0 0 1px #fff;
@@ -538,9 +538,9 @@ article footer .addthis iframe {
   content: '\f07b';
 }
 .archive {
-  -webkit-box-shadow: 1px 2px 3px #ddd;
-  box-shadow: 1px 2px 3px #ddd;
-  border-bottom: 1px solid #ddd;
+  -webkit-box-shadow: 1px 2px 3px #cfc;
+  box-shadow: 1px 2px 3px #cfc;
+  border-bottom: 1px solid #cfc;
   margin-bottom: 50px;
 }
 .archive article {
@@ -561,7 +561,7 @@ article footer .addthis iframe {
   }
 }
 #sidebar .widget {
-  background: rgba(255,255,255,0.2);
+  background: rgba(190,255,190,0.5);
   -webkit-box-shadow: 1px 2px 3px #ddd;
   box-shadow: 1px 2px 3px #ddd;
   margin-bottom: 30px;
@@ -570,7 +570,7 @@ article footer .addthis iframe {
 #sidebar .widget .title {
   padding: 15px 20px;
   font-size: 1em;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #cfc;
   font-weight: normal;
 }
 #sidebar .widget .entry {
@@ -598,24 +598,24 @@ article footer .addthis iframe {
   margin-bottom: 30px;
 }
 #sidebar .search input {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,155,0.3);
   font-family: "Lato", Helvetica Neue, Helvetica, Arial, sans-serif;
   font-style: italic;
   font-size: 1em;
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #cfc;
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  color: #fff;
+  color: #000;
 }
 #sidebar .search input:focus {
-  color: #fff;
+  color: #000;
 }
 #sidebar .tag small {
   margin-left: 15px;
-  color: #fff;
+  color: #000;
 }
 #sidebar .tag small:before {
   content: '(';
@@ -624,7 +624,7 @@ article footer .addthis iframe {
   content: ')';
 }
 #sidebar .twitter li {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #cfc;
   padding: 15px 20px;
   font-size: 0.9em;
 }
@@ -634,7 +634,7 @@ article footer .addthis iframe {
 #sidebar .twitter small {
   display: block;
   margin-top: 10px;
-  color: #fff;
+  color: #000;
   line-height: 1;
 }
 #sidebar .tagcloud .entry {
@@ -645,14 +645,14 @@ article footer .addthis iframe {
   display: inline-block;
 }
 #footer {
-  color: #fff;
+  color: #000;
   margin-bottom: 50px;
   font: 0.9em/1.6 "Lato", Helvetica Neue, Helvetica, Arial, sans-serif;
   text-shadow: 0 0 1px #fff;
 }
 .entry .gist {
   background: #eee;
-  border: 1px solid #ddd;
+  border: 1px solid #cfc;
   margin-top: 15px;
   padding: 7px 15px;
   -webkit-border-radius: 2px;
@@ -678,21 +678,21 @@ article footer .addthis iframe {
 }
 .entry .gist .gist-file .gist-meta {
   background: none;
-  color: #fff;
+  color: #000;
   margin-top: 5px;
   padding: 0;
   text-shadow: 0 0 1px #fff;
   font-size: 100%;
 }
 .entry .gist .gist-file .gist-meta a {
-  color: #bedeea;
+  color: #f11;
 }
 .entry .gist .gist-file .gist-meta a:visited {
-  color: #bedeea;
+  color: #f11;
 }
 figure.highlight {
-  background: #eee;
-  border: 1px solid #ddd;
+  background: #edd;
+  border: 1px solid #cfc;
   margin-top: 15px;
   padding: 7px 15px;
   -webkit-border-radius: 2px;
@@ -704,7 +704,7 @@ figure.highlight {
   font-size: 0.9em;
 }
 figure.highlight figcaption {
-  color: #fff;
+  color: #000;
   margin-bottom: 5px;
   text-shadow: 0 0 1px #fff;
 }
@@ -722,9 +722,9 @@ figure.highlight table {
   border-spacing: 0;
 }
 figure.highlight .gutter {
-  color: #fff;
+  color: #000;
   padding-right: 15px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #cfc;
   text-align: right;
 }
 figure.highlight .code {
