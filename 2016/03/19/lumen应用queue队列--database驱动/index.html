@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Lumen之队列 | BaLaBaLa</title>
+  <meta name="author" content="Miszhou">
+  
+  <meta name="description" content="~~~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Lumen之队列"/>
+  <meta property="og:site_name" content="BaLaBaLa"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BaLaBaLa" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BaLaBaLa</a></h1>
+  <h2><a href="/">想到哪，就去做，记性又不好~~~</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-19T07:29:23.000Z"><a href="/2016/03/19/lumen应用queue队列--database驱动/">2016-03-19</a></time>
+      
+      
+  
+    <h1 class="title">Lumen之队列</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Lumen 队列组件提供一个统一的 API 集成了许多不同的队列服务，队列允许你延后执行一个耗时的任务，例如延后至指定的时间才发送邮件，进而大幅的加快了应用程序处理请求的速度。<br><img src="http://p3.so.qhimg.com/t018c31d107b2b13943.jpg" alt="向阳"><br><a id="more"></a></p>
+<h3 id="基本queue配置及部分简述"><a href="#基本queue配置及部分简述" class="headerlink" title="基本queue配置及部分简述"></a>基本queue配置及部分简述</h3><p>Lumen 支持 数据库, Beanstalkd, IronMQ, Amazon SQS, Redis, null, 和 synchronous (本地开发使用) 队列驱动器。null队列驱动器会对所有的工作进行忽略, 并且从来不会运行。</p>
+<p>请在  .env 文件里面配置 QUEUE_DRIVER 参数来指定队列驱动器。本篇介绍配置database驱动。具体配置见<a href="http://lumen.laravel-china.org/docs/queues" target="_blank" rel="external">lumen文档</a>。<br>以下命令均在项目根目录下打开控制台执行。</p>
+<pre><code>php artisan key:generate
+</code></pre><p>当执行该命令生成32位app_key时可能会无法生成，请参考如下<a href="http://www.devside.net/wamp-server/laravel-no-supported-encrypter-found-the-cipher-or-key-length-are-invalid" target="_blank" rel="external">文档</a>。<br>配置过程中如果无法通过命令行生成任务类也可手动创建，仿照默认生成的任务类创建即可，对应的jobs表failed_jobs表也可以直接在数据库中创建，字段匹配即可。<br>创建完成后通过：</p>
+<pre><code>php artisan queue:listen 
+</code></pre><p>命令行开启队列监听，注意该监听开启后会一直执行并且占用控制台，知道ctrl+c退出监听。当退出后再被发送到jobs表的里的人物就不会被执行，直到监听再次开启，才会继续执行。（很狗血对不对，意味着关机就监听不到了，安啦，后面告诉你怎么解）。<br>除此之外还可以用以下命令行开启监听：</p>
+<pre><code>php artisan queue:work
+</code></pre><p>区别是work执行过一次任务就会自动退出。jobs表里之后的任务想要继续执行就得每个任务都开启一遍监听（好像也没有什么卵用的样子。。。 ）。</p>
+<p>将某一个任务推送进任务队列，可以使用：<br>    Queue::push(new SendEmail($message));<br>你也可指定队列工作送至指定的连接：<br>    Queue::pushOn(‘emails’, new SendEmail($message));<br>默认不指定直接push是将所有任务push到默认队列：default中，从失败队列记录就能看出：</p>
+<p><img src="/img/lumen0.png" alt="failed_jobs"></p>
+<p>你也可以在 listen / work 命令中使用逗号分隔的队列连接，来设置不同队列连接的优先层级：</p>
+<pre><code>php artisan queue:listen --queue=high,low
+</code></pre><p>在这个范列中，总是会优先处理 high-connection 中的工作，然后才处理 low-connection。<br>目测此功能是为了将优先级较高的队列授予优先执行的权利，并不是多个队列同步执行。</p>
+<p>一些其他的监听配置：</p>
+<h4 id="常驻队列处理器"><a href="#常驻队列处理器" class="headerlink" title="常驻队列处理器"></a>常驻队列处理器</h4><p>在 queue:work 中也包含了一个 –daemon 选项，强迫队列处理器持续处理工作，而不会每次都重新启动框架，这个作法比起 queue:listen 可有效减少 CPU 使用量，但是却增加了布署时，对于处理中队列任务的复杂性。</p>
+<p>要启动一个常驻的队列处理器，使用 –daemon：</p>
+<pre><code>php artisan queue:work connection --daemon --sleep=3 --tries=3
+</code></pre><p>其中connection指的是驱动方式名称，此处应填database sleep是指当一个任务没有正确执行时隔3秒进行第二次尝试，tries指同一条任务最多被执行3次，当执行3次仍旧没有执行成功将会被移到failed_jobs表中，当sleep不设置时即为失败后立即重新执行，tries不设置，即为无限次的尝试执行。</p>
+<h4 id="将-Eloquent-模型放进队列"><a href="#将-Eloquent-模型放进队列" class="headerlink" title="将 Eloquent 模型放进队列"></a>将 Eloquent 模型放进队列</h4><p>如果你队列工作的构造器接收一个 Eloquent 模型，只有这个模型的标记（ identifier ） 会被序列化后放到队列中。当工作真正开始被处理的时候，队列系统会自动从数据库中重新取得完整的模型实例。这个对你的网站应用程序来说是完全透明的，并且预防一些在序列化完整 Eloquent 模型实例时可能遇到的问题。<br>当将一个通过model获取的对象放进queue时，queue只存储该记录的id 当用到时才从数据库进行获取，这样就导致一些额外加入的属性无法拼接进该条记录，我的解决方法将整个数组传给队列进行处理。</p>
+<p><img src="/img/lumen1.png" alt="model"></p>
+<h3 id="引入Supervisor"><a href="#引入Supervisor" class="headerlink" title="引入Supervisor"></a>引入Supervisor</h3><p>好了，现在来说一说怎么解决不间断监听的问题。lumen文档中也有提到Supervisor，一个进程管理工具，确保正式环境下的队列进程一直处于监听状态。</p>
+<p>首先进行服务器命令行Supervisor安装：</p>
+<pre><code>yum install python-setuptools
+easy_install supervisor
+mkdir /etc/supervisor/
+mkdir /etc/supervisor/conf.d
+echo_supervisord_conf &gt; /etc/supervisor/supervisord.conf
+</code></pre><p>然后修改supervisord.conf文件</p>
+<pre><code>vi /etc/supervisor/supervisord.conf
+</code></pre><p>最后面添加（inster键进入编辑模式） :</p>
+<pre><code>[include]
+files = /etc/supervisor/conf.d/*.conf
+</code></pre><p>esc键+’:’+’wq’进行保存并退出编辑。</p>
+<p>创建以下文件，该文件存储php监听进程配置：<br>vi /etc/supervisor/conf.d/queue.conf<br>打开该文件，insert进行编辑，编辑内容如下：</p>
+<p>[program:queue]<br>user = root<br>command = php artisan queue:work –deamon –sleep=1 –tries=3<br>//命令<br>directory = /xxx/xx/x/your_project/<br>//进程路径<br>autostart               = true<br>//自动启动<br>autorestart             = true<br>//自动重启<br>stdout_logfile = /xxx/xxx/xx/logs/supervisor_waaQueue.log<br>stdout_logfile_maxbytes = 10MB<br>//进程日志文件<br>ogfile = /xxx/xxx/xx/logs/supervisor_wqqQueue.log<br>stderr_logfile_maxbytes = 10MB<br>//进程错误日志文件</p>
+<p>编辑完成  esc+： 输入wq进行保存并退出。</p>
+<p>因为supervisor能够确保进程一直处于开启状态，所以采用了消耗cpu比较小的queue：work –daemon方式。</p>
+<p>supervisor命令：<br>supervisorctl 查看保护进程,配置正确时将显示</p>
+<p>queue                          RUNNING    pid 5094, uptime 0:00:11</p>
+<p>若出现如下图所示，即为配置不成功，可能是进程路径没有配置正确，请重新配置queue.config。</p>
+<p><img src="/img/lumen2.png" alt="控制台"></p>
+<p>restart queue 重启进程<br>start queue  启动进程<br>stop queue 停止进程<br>Ctrl  c 退出supervisor命令。</p>
+<p>每次更改以上.config文件需要重启supervisor：<br>执行命令：supervisor reload</p>
+<p>执行完reload后重启进程<br>Php重启监听：php artisan queue:restart</p>
+<p>一不小心啰嗦了这么多。。。。希望可以帮到某些欧巴~~~</p>
+<p>相关链接：</p>
+<p><a href="https://segmentfault.com/a/1190000000532561" target="_blank" rel="external">https://segmentfault.com/a/1190000000532561</a></p>
+<p><a href="http://lumen.laravel-china.org/docs/queues" target="_blank" rel="external">http://lumen.laravel-china.org/docs/queues</a></p>
+<p><a href="http://www.tuicool.com/articles/Ejm2u2" target="_blank" rel="external">http://www.tuicool.com/articles/Ejm2u2</a></p>
+<p><a href="http://supervisord.org/installing.html" target="_blank" rel="external">http://supervisord.org/installing.html</a></p>
+<p><a href="http://www.ithao123.cn/content-10654702.html" target="_blank" rel="external">http://www.ithao123.cn/content-10654702.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Lumen，Queue，Supervisor，database/">Lumen，Queue，Supervisor，database</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2016/03/19/lumen应用queue队列--database驱动/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Lumen，Queue，Supervisor，database/">Lumen，Queue，Supervisor，database</a><small>1</small></li>
+  
+    <li><a href="/tags/Markdown/">Markdown</a><small>1</small></li>
+  
+    <li><a href="/tags/随笔，瞎写/">随笔，瞎写</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 Miszhou
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
