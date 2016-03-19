@@ -97,16 +97,34 @@ echo_supervisord_conf &gt; /etc/supervisor/supervisord.conf
 files = /etc/supervisor/conf.d/*.conf
 </code></pre><p>esc键+’:’+’wq’进行保存并退出编辑。</p>
 <p>创建以下文件，该文件存储php监听进程配置：<br>vi /etc/supervisor/conf.d/queue.conf<br>打开该文件，insert进行编辑，编辑内容如下：</p>
-<p>[program:queue]<br>user = root<br>command = php artisan queue:work –deamon –sleep=1 –tries=3<br>//命令<br>directory = /xxx/xx/x/your_project/<br>//进程路径<br>autostart               = true<br>//自动启动<br>autorestart             = true<br>//自动重启<br>stdout_logfile = /xxx/xxx/xx/logs/supervisor_waaQueue.log<br>stdout_logfile_maxbytes = 10MB<br>//进程日志文件<br>ogfile = /xxx/xxx/xx/logs/supervisor_wqqQueue.log<br>stderr_logfile_maxbytes = 10MB<br>//进程错误日志文件</p>
-<p>编辑完成  esc+： 输入wq进行保存并退出。</p>
+<pre><code>[program:queue]
+user = root
+command = php artisan queue:work --deamon --sleep=1 --tries=3
+//命令
+directory = /xxx/xx/x/your_project/
+//进程路径
+autostart               = true
+//自动启动
+autorestart             = true
+//自动重启
+stdout_logfile = /xxx/xxx/xx/logs/supervisor_waaQueue.log
+stdout_logfile_maxbytes = 10MB
+//进程日志文件
+ogfile = /xxx/xxx/xx/logs/supervisor_wqqQueue.log
+stderr_logfile_maxbytes = 10MB
+//进程错误日志文件
+</code></pre><p>编辑完成  esc+： 输入wq进行保存并退出。</p>
 <p>因为supervisor能够确保进程一直处于开启状态，所以采用了消耗cpu比较小的queue：work –daemon方式。</p>
 <p>supervisor命令：<br>supervisorctl 查看保护进程,配置正确时将显示</p>
 <p>queue                          RUNNING    pid 5094, uptime 0:00:11</p>
 <p>若出现如下图所示，即为配置不成功，可能是进程路径没有配置正确，请重新配置queue.config。</p>
 <p><img src="/img/lumen2.png" alt="控制台"></p>
-<p>restart queue 重启进程<br>start queue  启动进程<br>stop queue 停止进程<br>Ctrl  c 退出supervisor命令。</p>
-<p>每次更改以上.config文件需要重启supervisor：<br>执行命令：supervisor reload</p>
-<p>执行完reload后重启进程<br>Php重启监听：php artisan queue:restart</p>
+<pre><code>restart queue 重启进程
+start queue  启动进程
+stop queue 停止进程
+Ctrl  c 退出supervisor命令。
+</code></pre><p>每次更改以上.config文件需要重启supervisor：<br>    supervisor reload</p>
+<p>执行完reload后重启进程<br>    php artisan queue:restart</p>
 <p>一不小心啰嗦了这么多。。。。希望可以帮到某些欧巴~~~</p>
 <p>相关链接：</p>
 <p><a href="https://segmentfault.com/a/1190000000532561" target="_blank" rel="external">https://segmentfault.com/a/1190000000532561</a></p>
@@ -152,7 +170,7 @@ files = /etc/supervisor/conf.d/*.conf
 
 
 <section id="comment">
-  <h1 class="title">Comments</h1>
+  <h1 class="title">Kommentare</h1>
 
   
       <div id="fb-root"></div>
@@ -175,7 +193,7 @@ files = /etc/supervisor/conf.d/*.conf
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="search" name="q" results="0" placeholder="Suche">
     <input type="hidden" name="q" value="site:yoursite.com">
   </form>
 </div>
