@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>My First Article | BaLaBaLa</title>
+  <title>初识Vue | BaLaBaLa</title>
   <meta name="author" content="Miszhou">
   
   <meta name="description" content="~~~">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="My First Article"/>
+  <meta property="og:title" content="初识Vue"/>
   <meta property="og:site_name" content="BaLaBaLa"/>
 
   
@@ -50,18 +50,58 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-03-06T15:36:11.000Z"><a href="/2016/03/06/My-First-Article/">2016-03-06</a></time>
+        <time datetime="2016-03-26T15:46:23.000Z"><a href="/2016/03/26/初识Vue/">2016-03-26</a></time>
       
       
   
-    <h1 class="title">My First Article</h1>
+    <h1 class="title">初识Vue</h1>
   
 
     </header>
     <div class="entry">
       
-        <p><strong>咳咳，测试，测试</strong></p>
-<h1 id="也"><a href="#也" class="headerlink" title="也"></a>也</h1><h2 id="不"><a href="#不" class="headerlink" title="不"></a>不</h2><h3 id="知道"><a href="#知道" class="headerlink" title="知道"></a>知道</h3><h4 id="成功"><a href="#成功" class="headerlink" title="成功"></a>成功</h4><h5 id="了"><a href="#了" class="headerlink" title="了"></a>了</h5><h6 id="没"><a href="#没" class="headerlink" title="没"></a>没</h6><p>怕怕~~~</p>
+        <p>Vue.js（读音 /vjuː/, 类似于 view）是一个构建数据驱动的 web 界面的库。Vue.js 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。</p>
+<p>Vue.js 自身不是一个全能框架——它只聚焦于视图层。因此它非常容易学习，非常容易与其它库或已有项目整合。另一方面，在与相关工具和支持库一起使用时，Vue.js 也能完美地驱动复杂的单页应用。</p>
+<a id="more"></a>
+<p>最近折腾了一个礼拜，熟悉vue，在这里简单介绍一下安装配置。<br>首先要确保你已经安装了node.js，然后打开命令行，输入如下命令进行安装：</p>
+<pre><code>$ npm install -g vue-cli
+// 创建一个基于 &quot;webpack&quot; 模板的新项目
+$ vue init webpack my-project
+// 进入项目目录，安装依赖
+$ cd my-project
+$ npm install
+//启动项目
+$ npm run dev
+</code></pre><p>启动成功命令行会出现如下提示：</p>
+<p><img src="/img/vuesucc.png" alt="安装成功"></p>
+<p>浏览器输入localhost:8080出现如下所示，即为安装成功。</p>
+<p><img src="/img/vue8080.png" alt="浏览器访问"></p>
+<p>如果端口冲突，可以手动改变监听端口，项目-&gt;build-&gt;dev-server.js,<br>将底部8080更改为其他即可，保存并命令行重启既能以新端口访问。</p>
+<p><img src="/img/vue8081.png" alt="更改端口"><br><img src="/img/vue8081run.png" alt="重新访问"></p>
+<p>安装成功了，看看如何使用吧，<a href="http://cn.vuejs.org/guide/" target="_blank" rel="external">点此前往vue文档</a>。</p>
+<p>app.vue<br>    <template><br>        <div id="app"><br>          <img class="logo" src="./assets/logo.png"><br>          <hello></hello><br>        </div><br>    </template></p>
+<pre><code>&lt;script&gt;
+import Hello from &apos;./components/Hello&apos;
+
+  export default {
+    components: {
+      Hello
+  }
+}
+&lt;/script&gt;
+</code></pre><p>引入了hello组件，hello组件里的内容会插入到<hello></hello>标签内。<br>hello.vue<br>    <template><br>      <div class="hello"><br>        <h1></h1><br>      </div><br>    </template></p>
+<pre><code>&lt;script&gt;
+    export default {
+      data () {
+        return {
+          msg: &apos;Hello ~~ ~&apos;
+        }
+      }
+    }
+&lt;/script&gt;
+</code></pre><p>保存之后浏览器访问即可见到变化哦，很神奇的呢~~~</p>
+<p><img src="/img/vue1.png" alt="vue"></p>
+<p>msg里的内容进行界面渲染，就被Hello  ~~~进行填充了。<br>是不是很简单。</p>
 
       
     </div>
@@ -74,7 +114,7 @@
         
   
   <div class="tags">
-    <a href="/tags/随笔，瞎写/">随笔，瞎写</a>
+    <a href="/tags/vue/">vue</a>
   </div>
 
       
@@ -90,7 +130,7 @@
   
 <!-- 多说评论框 start -->
 <section id="comment">  
-  <div class="ds-thread" data-thread-key="2016/03/06/My-First-Article/" data-title="My First Article" data-url="http://miszhou.github.io/child/2016/03/06/My-First-Article/"></div>
+  <div class="ds-thread" data-thread-key="2016/03/26/初识Vue/" data-title="初识Vue" data-url="http://miszhou.github.io/child/2016/03/26/初识Vue/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
