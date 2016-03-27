@@ -79,8 +79,15 @@ $ npm run dev
 <p>　　如果端口冲突，可以手动改变监听端口，项目-&gt;build-&gt;dev-server.js,将底部8080更改为其他即可，保存并命令行重启既能以新端口访问。</p>
 <p><img src="/img/vue8081.png" alt="更改端口"><br><img src="/img/vue8081run.png" alt="重新访问"></p>
 <p>　　安装成功了，看看如何使用吧，<a href="http://cn.vuejs.org/guide/" target="_blank" rel="external">点此前往vue文档</a>。</p>
-<p>app.vue<br>    <template><br>        <div id="app"><br>          <img class="logo" src="./assets/logo.png"><br>          <hello></hello><br>        </div><br>    </template></p>
-<pre><code>&lt;script&gt;
+<p>app.vue</p>
+<pre><code>&lt;template&gt;
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;img class=&quot;logo&quot; src=&quot;./assets/logo.png&quot;&gt;
+      &lt;hello&gt;&lt;/hello&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
 import Hello from &apos;./components/Hello&apos;
 
   export default {
@@ -89,8 +96,14 @@ import Hello from &apos;./components/Hello&apos;
   }
 }
 &lt;/script&gt;
-</code></pre><p>　　引入了hello组件，hello组件里的内容会插入到<hello></hello>标签内。<br>hello.vue<br>    <template><br>      <div class="hello"><br>        <h1></h1><br>      </div><br>    </template></p>
-<pre><code>&lt;script&gt;
+</code></pre><p>　　引入了hello组件，hello组件里的内容会插入到<hello></hello>标签内。<br>hello.vue</p>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;hello&quot;&gt;
+    &lt;h1&gt;{{ msg }}&lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
     export default {
       data () {
         return {
@@ -143,7 +156,7 @@ import Hello from &apos;./components/Hello&apos;
 
 
 <section id="comment">
-  <h1 class="title">Kommentare</h1>
+  <h1 class="title">Comments</h1>
 
   
 <!-- 多说评论框 start -->
@@ -171,7 +184,7 @@ var duoshuoQuery = {short_name:"miszhou"};
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="search" name="q" results="0" placeholder="Search">
     <input type="hidden" name="q" value="site:miszhou.github.io">
   </form>
 </div>
@@ -183,7 +196,9 @@ var duoshuoQuery = {short_name:"miszhou"};
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/Lumen，Queue，Supervisor，database/">Lumen，Queue，Supervisor，database</a><small>1</small></li>
+    <li><a href="/tags/Lumen，Queue，Supervisor/">Lumen，Queue，Supervisor</a><small>1</small></li>
+  
+    <li><a href="/tags/Lumen，Queue，Supervisor，database/">Lumen，Queue，Supervisor，database</a><small>0</small></li>
   
     <li><a href="/tags/Markdown/">Markdown</a><small>1</small></li>
   
